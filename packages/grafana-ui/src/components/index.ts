@@ -86,3 +86,6 @@ export { JSONFormatter } from './JSONFormatter/JSONFormatter';
 export { JsonExplorer } from './JSONFormatter/json_explorer/json_explorer';
 export { ErrorBoundary, ErrorBoundaryAlert } from './ErrorBoundary/ErrorBoundary';
 export { AlphaNotice } from './AlphaNotice/AlphaNotice';
+
+// Segment
+export { GroupBy, SegmentAdd, Segment, SegmentSelect } from './Segment/';
