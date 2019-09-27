@@ -88,4 +88,4 @@ export { ErrorBoundary, ErrorBoundaryAlert } from './ErrorBoundary/ErrorBoundary
 export { AlphaNotice } from './AlphaNotice/AlphaNotice';
 
 // Segment
-export { GroupBy, SegmentAdd, Segment, SegmentSelect } from './Segment/';
+export { Segment, SegmentAsync, SegmentSelect, OptionType } from './Segment/';
