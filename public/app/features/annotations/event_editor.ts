@@ -4,6 +4,7 @@ import { MetricsPanelCtrl } from 'app/plugins/sdk';
 import { AnnotationEvent } from '@grafana/data';
 import { dateTime } from '@grafana/data';
 import { AnnotationsSrv } from './all';
+import { VariableSrv } from '../templating/variable_srv';
 
 export class EventEditorCtrl {
   panelCtrl: MetricsPanelCtrl;
@@ -14,7 +15,7 @@ export class EventEditorCtrl {
   timeFormated: string;
 
   /** @ngInject */
-  constructor(private annotationsSrv: AnnotationsSrv) {
+  constructor(private annotationsSrv: AnnotationsSrv, private variableSrv: VariableSrv) {
     this.event.panelId = this.panelCtrl.panel.id;
     this.event.dashboardId = this.panelCtrl.dashboard.id;
 
@@ -25,6 +26,17 @@ export class EventEditorCtrl {
     }
 
     this.timeFormated = this.panelCtrl.dashboard.formatDate(this.event.time);
+
+    if (!this.event.id) {
+      this.variableSrv.variables.forEach(variable => {
+        if (variable.name === 'annotation_default_description') {
+          this.event.text = variable.current.value;
+        }
+        if (variable.name === 'annotation_default_tags') {
+          this.event.tags = variable.current.value;
+        }
+      });
+    }
   }
 
   save() {
