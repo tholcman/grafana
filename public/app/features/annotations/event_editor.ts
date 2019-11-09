@@ -29,11 +29,19 @@ export class EventEditorCtrl {
 
     if (!this.event.id) {
       this.variableSrv.variables.forEach(variable => {
-        if (variable.name === 'annotation_default_description') {
-          this.event.text = variable.current.value;
-        }
-        if (variable.name === 'annotation_default_tags') {
-          this.event.tags = variable.current.value;
+        // TODO escape names and values for : and ;
+        if (variable.name.startsWith('annotation_default_')) {
+          const tagName = variable.name.replace('annotation_default_', '');
+          let tagValue;
+          if (Array.isArray(variable.current.value)) {
+            tagValue = variable.current.value.join(';');
+          } else {
+            tagValue = variable.current.value;
+          }
+          if (!Array.isArray(this.event.tags)) {
+            this.event.tags = [];
+          }
+          this.event.tags.append(tagName + ':' + tagValue);
         }
       });
     }
